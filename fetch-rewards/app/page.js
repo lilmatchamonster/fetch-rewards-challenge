@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Form from 'next/form'
 import { useState } from "react";
-import { submitForm, getBreeds } from "./helpers";
+import { submitForm, getBreeds } from "../helpers";
 import huskybgi from "../public/husky.png";
-import "./authscreen.css";
+import styles from "./page.module.css";
 
 export default function AuthScreen() {
   const [ formData, setFormData ] = useState({ name: "", email: "" })
@@ -17,9 +17,7 @@ export default function AuthScreen() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = async (event) => {
-    // event.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       const response = await submitForm(formData);
       console.log('Form submitted successfully:', response);
@@ -29,14 +27,14 @@ export default function AuthScreen() {
   };
 
   return (
-    <div className="container">
-      <h2 className="moto">Bringing Families together</h2>
-      <div className="main">
-        <main className="auth-container">
+    <div className={styles.container}>
+      <h2 className={styles.moto}>Bringing Families together</h2>
+      <div className={styles.main}>
+        <main className={styles.authContainer}>
           <h2>Login / SignUp</h2>
-          <Form action={handleSubmit}>
+          <Form className={styles.form} action={handleSubmit}>
             <h3>Please enter username and email for login or signup</h3>
-            <div className="inputs">
+            <div className={styles.inputs}>
               <label htmlFor="name">username</label>
               <input 
                 id="name" 
@@ -54,14 +52,14 @@ export default function AuthScreen() {
               />
             </div>
             <button type="submit">Submit</button>
-            <button type="button" onClick={getBreeds}>Get Breeds</button>
           </Form>
+            <button onClick={getBreeds}>Get Breeds</button>
         </main>
-        <footer className={"footer"}>
+        <footer className={styles.footer}>
           © 2025 Vercel, Inc.
         </footer> 
       </div>
-      <Image className="bgm" src={huskybgi} alt="husky"/>
+      <Image className={styles.bgm} src={huskybgi} alt="husky"/>
     </div>
   );
 }
